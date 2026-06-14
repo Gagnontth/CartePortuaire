@@ -23,55 +23,60 @@ body {
 /* ===============================
    HEADER MODERNE
 =============================== */
+
 #header {
   margin:15px;
-  padding:15px 25px;
+  padding:12px 20px;
   border-radius:18px;
   background:linear-gradient(90deg,#1e3c72,#2a6fd6);
   color:white;
-  font-size:20px;
+  font-size:16px;
   font-weight:600;
   box-shadow:0 6px 20px rgba(0,0,0,0.12);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* ===============================
-   TOPBAR
-=============================== */
-#topbar { 
-  margin:0 15px 15px 15px;
+#header-left {
+  font-size:20px;
+}
+
+/* zone droite */
+#header-right {
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:10px;
 }
 
-/* SEARCH */
-#topbar input {
-  width:70%;
-  padding:10px 15px;
-  border-radius:30px;
-  border:1px solid #ddd;
-  background:white;
-  outline:none;
-  transition:0.2s;
-}
-
-#topbar input:focus {
-  border-color:#007bff;
-  box-shadow:0 0 5px rgba(0,123,255,0.4);
-}
-
-/* BUTTON + */
-#topbar button {
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#1e90ff,#007bff);
-  color:white;
-  font-size:24px;
+/* champ recherche */
+#header-right input {
+  padding:8px 12px;
+  border-radius:20px;
   border:none;
-  cursor:pointer;
-  box-shadow:0 5px 18px rgba(0,0,0,0.25);
+  outline:none;
+  width:200px;
 }
+
+/* bouton + */
+
+#header-right button {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:white;
+  color:#007bff;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+}
+
+#header-right button:hover {
+  background:#e6f0ff;
+}
+
+
 
 /* ===============================
    MAP
@@ -102,6 +107,10 @@ body {
   display:none;
 }
 
+#panel, #formPanel {
+  scroll-behavior:smooth;
+}
+
 /* ===============================
    FORMULAIRE
 =============================== */
@@ -120,13 +129,20 @@ body {
 }
 
 /* INPUTS */
-select, input, textarea {
+
+.form-group select,
+.form-group input,
+.form-group textarea {
   width:100%;
   padding:8px;
   border-radius:10px;
   border:1px solid #ddd;
+ border-color:#007bff;
+  box-shadow:0 0 4px rgba(0,123,255,0.3);
+  outline:none;
   box-sizing:border-box;
 }
+
 
 /* ACTIONS */
 .form-actions {
@@ -149,10 +165,35 @@ select, input, textarea {
   color:white;
 }
 
+.form-actions button:hover {
+  background:#0056b3;
+}
+
+
 /* CLOSE BUTTON */
 button[onclick*="fermer"]{
   background:#ccc !important;
   color:black;
+}
+
+#notif {
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background:#28a745;
+  color:white;
+  padding:12px 20px;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.3s;
+  z-index:3000;
+}
+
+#notif.show {
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* ===============================
@@ -174,12 +215,20 @@ img {
 
 <body>
 
-<div id="header">⚓ Ports</div>
 
-<div id="topbar">
-  <button onclick="ouvrirForm('')">➕</button>
-  <input id="search" placeholder="Recherche..." oninput="rechercher()">
+<div id="header">
+
+  <div id="header-left">
+    ⚓ Ports
+  </div>
+
+  <div id="header-right">
+    <input id="search" placeholder="Recherche..." oninput="rechercher()">
+    <button onclick="ouvrirForm('')">➕</button>
+  </div>
+
 </div>
+
 
 <div id="map"></div>
 <div id="panel"></div>
@@ -476,33 +525,77 @@ let data={
   let fd=new FormData();
   for(let k in data) fd.append(k,data[k]);
 
-  fetch(API,{method:"POST",body:fd})
-  .then(async ()=>{
-    fermerForm();
-    await charger();
-    ouvrirFiche(data["Nom_du_port"]);
-  });
+
+fetch(API,{method:"POST",body:fd})
+.then(async ()=>{
+
+  showNotif("✅ Port sauvegardé");
+
+  fermerForm();
+
+  await charger();
+  ouvrirFiche(data["Nom_du_port"]);
+
+});
+
+
+}
+
+function showNotif(message){
+
+  let n = document.getElementById("notif");
+
+  n.innerText = message;
+  n.classList.add("show");
+
+  setTimeout(()=>{
+    n.classList.remove("show");
+  }, 2000);
 
 }
 
 // =========================
 // CLICK MAP
 // =========================
+
 map.on("click", e => {
 
-  ouvrirForm("");
+  let form = document.getElementById("formPanel");
 
-  setTimeout(()=>{
+  // ✅ enlever ancien marker
+  if(tempMarker){
+    map.removeLayer(tempMarker);
+  }
 
-    let lat=document.getElementById("lat");
-    let lng=document.getElementById("lng");
+  // ✅ ajouter nouveau marker temporaire
+  tempMarker = L.marker(e.latlng).addTo(map);
 
-    if(lat && lng){
-      lat.value=e.latlng.lat;
-      lng.value=e.latlng.lng;
+  let lat = e.latlng.lat.toFixed(6);
+  let lng = e.latlng.lng.toFixed(6);
+
+  // ✅ si formulaire ouvert → modifier seulement
+  if(form.style.display === "block"){
+
+    let latInput = document.getElementById("lat");
+    let lngInput = document.getElementById("lng");
+
+    if(latInput && lngInput){
+      latInput.value = lat;
+      lngInput.value = lng;
     }
 
-  },200);
+    return;
+  }
+
+  // ✅ sinon ouvrir nouveau
+  ouvrirForm("");
+
+  setTimeout(() => {
+
+    document.getElementById("lat").value = lat;
+    document.getElementById("lng").value = lng;
+
+  }, 200);
 
 });
 
@@ -553,7 +646,7 @@ document.addEventListener("click", function(e){
 
 
 
-
+<div id="notif"></div>
 
 </script>
 </body>
