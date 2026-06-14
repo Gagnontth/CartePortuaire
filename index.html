@@ -526,23 +526,31 @@ function fermerTout(){
 
 // ✅ Click extérieur
 
-
 document.addEventListener("click", function(e){
 
   let panel = document.getElementById("panel");
+  let form = document.getElementById("formPanel");
+  let mapDiv = document.getElementById("map");
 
-  let clickDansPanel = panel.contains(e.target);
-  let bouton = e.target.closest("button");
+  // ✅ clic dans fiche
+  if(panel.contains(e.target)) return;
 
-  // ✅ Si clic dans fiche ou bouton → ne rien faire
-  if(clickDansPanel || bouton) return;
+  // ✅ clic dans formulaire → jamais fermer
+  if(form.contains(e.target)) return;
 
-  // ✅ Sinon fermer UNIQUEMENT la fiche
+  // ✅ clic sur carte → jamais fermer
+  if(mapDiv.contains(e.target)) return;
+
+  // ✅ clic sur bouton → éviter conflits
+  if(e.target.closest("button")) return;
+
+  // ✅ fermer seulement fiche
   if(panel.style.display==="block"){
     panel.style.display="none";
   }
 
 });
+
 
 
 
