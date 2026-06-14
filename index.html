@@ -247,6 +247,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 .addTo(map);
 
 let ports=[];
+let tempMarker;
 
 function safeStr(s){ return (s||"").replace(/'/g,"\\'"); }
 
