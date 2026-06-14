@@ -526,28 +526,24 @@ function fermerTout(){
 
 // ✅ Click extérieur
 
+
 document.addEventListener("click", function(e){
 
   let panel = document.getElementById("panel");
-  let form = document.getElementById("formPanel");
 
   let clickDansPanel = panel.contains(e.target);
-  let clickDansForm = form.contains(e.target);
   let bouton = e.target.closest("button");
 
-  // ✅ Si clic DANS panel → ne rien faire
-  if(clickDansPanel || clickDansForm || bouton) return;
+  // ✅ Si clic dans fiche ou bouton → ne rien faire
+  if(clickDansPanel || bouton) return;
 
-  // ✅ Sinon fermer
+  // ✅ Sinon fermer UNIQUEMENT la fiche
   if(panel.style.display==="block"){
     panel.style.display="none";
   }
 
-  if(form.style.display==="block"){
-    form.style.display="none";
-  }
-
 });
+
 
 
 
