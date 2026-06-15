@@ -412,10 +412,11 @@ function ouvrirFiche(nom){
   "<br><br>"+
 
 
-"<div class='form-actions'>"+"<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
+
+"<div class='form-actions'>"+
+"<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
 "<button onclick=\"supprimerPort('"+p.ID+"')\" style='background:#dc3545'>Supprimer</button>"+
 "</div>"
-
 
   document.getElementById("panel").style.display="block";
 }
