@@ -421,14 +421,23 @@ function ouvrirFiche(nom){
   document.getElementById("panel").style.display="block";
 }
 
+
 function afficherService(v){
 
-  if(!v || v.trim() === ""){
+  if(!v){
     return "❌";
   }
 
-  return v;
+  // ✅ convertir en string pour éviter erreur
+  let val = v.toString().trim();
+
+  if(val === ""){
+    return "❌";
+  }
+
+  return val;
 }
+
 
 // =========================
 // FORMULAIRE COMPLET ORIGINAL
