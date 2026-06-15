@@ -323,7 +323,7 @@ function afficher(data){
         "📞 "+(p.Telephone||"")+"<br>"+
         "✉️ "+(p.Courriel||"")+"<br><br>"+
 
-        "<button onclick=\"ouvrirFiche('"+safeStr(nom)+"')\">Voir fiche</button>"
+        "<button onclick=\"ouvrirFiche("+p.ID+")\">Voir fiche</button>"
       )
       .openOn(map);
     });
