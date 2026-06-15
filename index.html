@@ -368,6 +368,7 @@ function fermerFiche(){
 function ouvrirFiche(nom){
 
   let p = ports.find(x => x.Nom_du_port === nom);
+   console.log("Port DATA:", p);
   if(!p) return;
 
   document.getElementById("formPanel").style.display="none";
