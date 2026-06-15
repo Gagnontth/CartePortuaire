@@ -460,13 +460,20 @@ function afficherService(v){
 // =========================
 // FORMULAIRE COMPLET ORIGINAL
 // =========================
-function ouvrirForm(nom){
+
+function ouvrirForm(id, lat=null, lng=null){
 
   document.getElementById("panel").style.display="none";
 
-  let p = ports.find(x => x.Nom_du_port === nom) || {};
+  let p = {};
+
+  // ✅ si modification
+  if(id){
+    p = ports.find(x => Number(x.ID) === Number(id)) || {};
+  }
 
   document.getElementById("formPanel").innerHTML = `
+
 
   <h3>${nom?"Modifier":"Ajouter"}</h3>
 
