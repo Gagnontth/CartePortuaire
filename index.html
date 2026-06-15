@@ -356,6 +356,11 @@ function rechercher(){
 // =========================
 function fermerForm(){
   document.getElementById("formPanel").style.display="none";
+  if(tempMarker){
+    map.removeLayer(tempMarker);
+    tempMarker = null;
+  }
+
 }
 
 function fermerFiche(){
