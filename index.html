@@ -416,7 +416,7 @@ function ouvrirFiche(nom){
 
 "<div class='form-actions'>"+
 "<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
-"<button onclick=\"supprimerPort('"+p.ID+"')\" style='background:#dc3545'>Supprimer</button>"+
+"<button onclick='supprimerPort("+p.ID+")' style='background:#dc3545'>Supprimer</button>"
 "</div>"
 
   document.getElementById("panel").style.display="block";
@@ -755,7 +755,7 @@ document.addEventListener("click", function(e){
 function supprimerPort(id){
 
   let password = prompt("Mot de passe requis pour supprimer ce port");
-
+console.log("ID reçu dans supprimerPort:", id);
   if(password !== "cul"){
     alert("❌ Mot de passe incorrect");
     return;
