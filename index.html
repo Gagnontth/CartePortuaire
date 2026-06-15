@@ -766,20 +766,28 @@ function supprimerPort(id){
   fd.append("action","delete");
   fd.append("ID", id);
 
+
   fetch(API,{
     method:"POST",
     body:fd
   })
-  .then(async ()=>{
+  .then(res => res.json())
+  .then(async (data)=>{
 
-    showNotif("🗑️ Port supprimé");
+    console.log("Réponse serveur:", data);
 
-    fermerFiche();
-    await charger();
+    if(data.status === "deleted"){
+      showNotif("🗑️ Port supprimé : " + id);
+      fermerFiche();
+      await charger();
+    } else {
+      alert("❌ Suppression échouée");
+    }
 
   });
 
 }
+
 
 </script>
    <div id="notif"></div>
