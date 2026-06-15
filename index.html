@@ -414,7 +414,7 @@ function ouvrirFiche(nom){
 
 "<div class='form-actions'>"+
 "<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
-"<button onclick=\"supprimerPort('"+safeStr(nom)+"')\" style='background:#dc3545'>Supprimer</button>"+
+<button onclick="supprimerPort('"+p.ID+"')"\" style='background:#dc3545'>Supprimer</button>"+
 "</div>"
 
 
@@ -741,11 +741,11 @@ document.addEventListener("click", function(e){
 
 });
 
-function supprimerPort(nom){
+
+function supprimerPort(id){
 
   let password = prompt("Mot de passe requis pour supprimer ce port");
 
-  // 🔒 ton mot de passe
   if(password !== "cul"){
     alert("❌ Mot de passe incorrect");
     return;
@@ -755,7 +755,7 @@ function supprimerPort(nom){
 
   let fd = new FormData();
   fd.append("action","delete");
-  fd.append("Nom_du_port", nom);
+  fd.append("ID", id);
 
   fetch(API,{
     method:"POST",
@@ -771,10 +771,6 @@ function supprimerPort(nom){
   });
 
 }
-
-
-
-
 
 </script>
    <div id="notif"></div>
