@@ -394,12 +394,14 @@ function ouvrirFiche(nom){
 
   "<b>✉️ Courriel</b><br>"+(p.Courriel||"")+"<br><br>"+
 
-  "<b>⚙️ Services</b><br>"+
-  "Eau potable: "+icone(p.Eau_potable)+"<br>"+
-  "Carburant: "+icone(p.Carburant)+"<br>"+
-  "Vidange: "+icone(p.Vidange)+"<br>"+
-  "Buanderie: "+icone(p.Buanderie)+"<br>"+
-  "Voiture: "+icone(p.Voiture)+"<br><br>"+
+
+"<b>⚙️ Services</b><br>"+
+"Eau potable: "+afficherService(p.Eau_potable)+"<br>"+
+"Carburant: "+afficherService(p.Carburant)+"<br>"+
+"Vidange: "+afficherService(p.Vidange)+"<br>"+
+"Buanderie: "+afficherService(p.Buanderie)+"<br>"+
+"Voiture: "+afficherService(p.Voiture)+"<br><br>"+
+
 
   "<b>📊 Statut</b><br>"+(p.Statut || "Non défini")+"<br><br>"+
 
@@ -409,11 +411,23 @@ function ouvrirFiche(nom){
 
   "<br><br>"+
 
-  "<div class='form-actions'>"+
-  "<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
-  "</div>";
+
+"<div class='form-actions'>"+
+"<button onclick=\"ouvrirForm('"+safeStr(nom)+"')\">Modifier</button>"+
+"<button onclick=\"supprimerPort('"+safeStr(nom)+"')\" style='background:#dc3545'>Supprimer</button>"+
+"</div>"
+
 
   document.getElementById("panel").style.display="block";
+}
+
+function afficherService(v){
+
+  if(!v || v.trim() === ""){
+    return "❌";
+  }
+
+  return v;
 }
 
 // =========================
@@ -726,6 +740,37 @@ document.addEventListener("click", function(e){
   }
 
 });
+
+function supprimerPort(nom){
+
+  let password = prompt("Mot de passe requis pour supprimer ce port");
+
+  // 🔒 ton mot de passe
+  if(password !== "cul"){
+    alert("❌ Mot de passe incorrect");
+    return;
+  }
+
+  if(!confirm("⚠️ Confirmer la suppression définitive ?")) return;
+
+  let fd = new FormData();
+  fd.append("action","delete");
+  fd.append("Nom_du_port", nom);
+
+  fetch(API,{
+    method:"POST",
+    body:fd
+  })
+  .then(async ()=>{
+
+    showNotif("🗑️ Port supprimé");
+
+    fermerFiche();
+    await charger();
+
+  });
+
+}
 
 
 
