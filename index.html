@@ -475,7 +475,7 @@ function ouvrirForm(id, lat=null, lng=null){
   document.getElementById("formPanel").innerHTML = `
 
 
-  <h3>${nom?"Modifier":"Ajouter"}</h3>
+<h3>${id ? "Modifier" : "Ajouter"}</h3>
 
   <input type='hidden' id='id' value='${p.ID||""}'>
 <h3>📍 Informations générale
