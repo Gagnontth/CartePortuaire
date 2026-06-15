@@ -477,7 +477,7 @@ function ouvrirForm(id, lat=null, lng=null){
 
 <h3>${id ? "Modifier" : "Ajouter"}</h3>
 
-  <input type='hidden' id='id' value='${p.ID||""}'>
+  <input type='hidden' id='id' value='${p.ID || Date.now()}'>
 <h3>📍 Informations générale
   <div class='form-group'>
     <label>Nom</label>
@@ -485,12 +485,12 @@ function ouvrirForm(id, lat=null, lng=null){
   </div>
   <div class='form-group'>
     <label>Latitude</label>
-    <input id='lat' value='${p.Latitude||""}'>
+    <input id='lat' value='${lat || p.Latitude || ""}'>
   </div>
 
   <div class='form-group'>
     <label>Longitude</label>
-    <input id='lng' value='${p.Longitude||""}'>
+    <input id='lng' value='${lng || p.Longitude || ""}'>
   </div>
   <div class='form-group'>
     <label>Ville</label>
