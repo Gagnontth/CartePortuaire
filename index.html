@@ -597,7 +597,7 @@ function ouvrirForm(nom){
 
   <div class='form-actions'>
     <button onclick='sauver()'>💾 Sauver</button>
-    <button onclick='fermerForm()'>❌</button>
+    <button onclick='event.stopPropagation(); fermerForm();'>❌</button>
   </div>
   `;
 
