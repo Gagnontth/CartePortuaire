@@ -107,6 +107,10 @@ body {
   display:none;
 }
 
+#panel p, #panel div {
+  line-height:1.5;
+}
+
 #panel, #formPanel {
   scroll-behavior:smooth;
 }
@@ -399,7 +403,7 @@ function ouvrirFiche(nom){
 
   "<b>📊 Statut</b><br>"+(p.Statut || "Non défini")+"<br><br>"+
 
-  "<b>📝 Informations</b><br>"+(p.Informations||"")+"<br><br>"+
+  "<b>📝 Informations</b><br>"+(p.Informations || "").replace(/\n/g, "<br>")+"<br><br>"+
 
   (p.Photos ? "<img src='"+p.Photos+"'>" : "<i>Aucune photo</i>") +
 
@@ -426,17 +430,11 @@ function ouvrirForm(nom){
   <h3>${nom?"Modifier":"Ajouter"}</h3>
 
   <input type='hidden' id='id' value='${p.ID||""}'>
-
+<h3>📍 Informations générale
   <div class='form-group'>
     <label>Nom</label>
     <input id='nom' value='${p.Nom_du_port||""}'>
   </div>
-
-  <div class='form-group'>
-    <label>Ville</label>
-    <input id='ville' value='${p.Ville||""}'>
-  </div>
-
   <div class='form-group'>
     <label>Latitude</label>
     <input id='lat' value='${p.Latitude||""}'>
@@ -446,16 +444,49 @@ function ouvrirForm(nom){
     <label>Longitude</label>
     <input id='lng' value='${p.Longitude||""}'>
   </div>
-
   <div class='form-group'>
-    <label>Région</label>
-    <input id='region' value='${p.Region||""}'>
+    <label>Ville</label>
+    <input id='ville' value='${p.Ville||""}'>
   </div>
+  
+<div class='form-group'>
+  <label>Région</label>
+  <select id='region'>
+    <option value=''>--Choisir--</option>
+    <option value='Fleuve Saint-Laurent' ${(p.Region==="Fleuve Saint-Laurent")?"selected":""}>Fleuve Saint-Laurent</option>
+    <option value='Voie Maritime' ${(p.Region==="Voie Maritime")?"selected":""}>Voie Maritime</option>
+    <option value='Gaspesie' ${(p.Region==="Gaspesie")?"selected":""}>Gaspesie</option>
+    <option value='Cote-Nord' ${(p.Region==="Cote-Nord")?"selected":""}>Côte-Nord</option>
+    <option value='Golf du Saint-Laurent' ${(p.Region==="Golf du Saint-Laurent")?"selected":""}>Golfe du Saint-Laurent</option>
+    <option value='Detroit de Northumberland' ${(p.Region==="Detroit de Northumberland")?"selected":""}>Détroit de Northumberland</option>
+    <option value='Cape Breton' ${(p.Region==="Cape Breton")?"selected":""}>Cape Breton</option>
+    <option value='Cote Est' ${(p.Region==="Cote Est")?"selected":""}>Côte Est</option>
+    <option value='Terre-Neuve' ${(p.Region==="Terre-Neuve")?"selected":""}>Terre-Neuve</option>
+  </select>
+</div>
 
-  <div class='form-group'>
-    <label>Province</label>
-    <input id='province' value='${p.Province||""}'>
-  </div>
+<div class='form-group'>
+  <label>Province / Territoire</label>
+  <select id='province'>
+
+    <option value=''>--Choisir--</option>
+
+    <option value='AB' ${(p.Province==="AB")?"selected":""}>Alberta</option>
+    <option value='BC' ${(p.Province==="BC")?"selected":""}>Colombie-Britannique</option>
+    <option value='MB' ${(p.Province==="MB")?"selected":""}>Manitoba</option>
+    <option value='NB' ${(p.Province==="NB")?"selected":""}>Nouveau-Brunswick</option>
+    <option value='NL' ${(p.Province==="NL")?"selected":""}>Terre-Neuve-et-Labrador</option>
+    <option value='NS' ${(p.Province==="NS")?"selected":""}>Nouvelle-Écosse</option>
+    <option value='NT' ${(p.Province==="NT")?"selected":""}>Territoires du Nord-Ouest</option>
+    <option value='NU' ${(p.Province==="NU")?"selected":""}>Nunavut</option>
+    <option value='ON' ${(p.Province==="ON")?"selected":""}>Ontario</option>
+    <option value='PE' ${(p.Province==="PE")?"selected":""}>Île-du-Prince-Édouard</option>
+    <option value='QC' ${(p.Province==="QC")?"selected":""}>Québec</option>
+    <option value='SK' ${(p.Province==="SK")?"selected":""}>Saskatchewan</option>
+    <option value='YT' ${(p.Province==="YT")?"selected":""}>Yukon</option>
+
+  </select>
+</div>
 
   <div class='form-group'>
     <label>Maître de port</label>
@@ -476,23 +507,74 @@ function ouvrirForm(nom){
     <label>Adresse</label>
     <input id='adresse' value='${p.Adresse||""}'>
   </div>
+<h3>⚙️ Services</h3>
+<div class="form-group">
+  <label for="eau">Eau potable</label>
+  <input 
+    type="text"
+    id="eau"
+    value="${p.Eau_potable || ""}" 
+    placeholder="Ex: Oui / Non / Payant / Sur demande"
+  >
+</div>
 
-  <div class='form-group'><label>Eau potable</label>${selectOuiNon("eau",p.Eau_potable)}</div>
-  <div class='form-group'><label>Carburant</label>${selectOuiNon("carburant",p.Carburant)}</div>
-  <div class='form-group'><label>Vidange</label>${selectOuiNon("vidange",p.Vidange)}</div>
-  <div class='form-group'><label>Buanderie</label>${selectOuiNon("buanderie",p.Buanderie)}</div>
-  <div class='form-group'><label>Voiture</label>${selectOuiNon("voiture",p.Voiture)}</div>
+<div class="form-group">
+  <label for="carburant">Carburant</label>
+  <input 
+    type="text"
+    id="carburant"
+    value="${p.Carburant || ""}" 
+    placeholder="Ex: Diesel / Essence / Non"
+  >
+</div>
 
-  <div class='form-group'>
-    <label>Informations</label>
-    <textarea id='info'>${p.Informations||""}</textarea>
-  </div>
+<div class="form-group">
+  <label for="vidange">Vidange</label>
+  <input 
+    type="text"
+    id="vidange"
+    value="${p.Vidange || ""}" 
+    placeholder="Ex: Oui / Non / Payant"
+  >
+</div>
+
+<div class="form-group">
+  <label for="buanderie">Buanderie</label>
+  <input 
+    type="text"
+    id="buanderie"
+    value="${p.Buanderie || ""}" 
+    placeholder="Ex: Oui / Non"
+  >
+</div>
+
+<div class="form-group">
+  <label for="voiture">Voiture</label>
+  <input 
+    type="text"
+    id="voiture"
+    value="${p.Voiture || ""}" 
+    placeholder="Ex: Taxi / Location / Navette"
+  >
+</div>
+</div>
+ 
+<div class="form-group">
+
+  <label for="info">Informations</label>
+
+  <textarea 
+    id="info"
+    rows="6"
+    placeholder="Écrire les informations détaillées ici..."
+  >${p.Informations || ""}</textarea>
+
+</div>
 
   <div class='form-actions'>
     <button onclick='sauver()'>💾 Sauver</button>
     <button onclick='fermerForm()'>❌</button>
   </div>
-
   `;
 
   document.getElementById("formPanel").style.display="block";
