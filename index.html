@@ -500,10 +500,14 @@ function ouvrirForm(id, lat=null, lng=null){
 <div class='form-group'>
   <label>Région</label>
   <select id='region'>
-    <option value=''>--Choisir--</option>
-    <option value='Fleuve Saint-Laurent' ${(p.Region==="Fleuve Saint-Laurent")?"selected":""}>Fleuve Saint-Laurent</option>
+    <option value=''>--Choisir--</option>   
+<option value='Voie Maritime' 
+  ${(p.Region==="Voie Maritime")?"selected":""}
+  title='De Montréal jusqu’aux Grands Lacs'>
+  Voie Maritime
+</option>
     <option value='Voie Maritime' ${(p.Region==="Voie Maritime")?"selected":""}>Voie Maritime</option>
-    <option value='Gaspesie' ${(p.Region==="Gaspesie")?"selected":""}>Gaspesie</option>
+    <option value='Gaspesie' ${(p.Region==="Gaspesie")?"selected":""}>Gaspesie et Baie-des-Chaleurs</option>
     <option value='Cote-Nord' ${(p.Region==="Cote-Nord")?"selected":""}>Côte-Nord</option>
     <option value='Golf du Saint-Laurent' ${(p.Region==="Golf du Saint-Laurent")?"selected":""}>Golfe du Saint-Laurent</option>
     <option value='Detroit de Northumberland' ${(p.Region==="Detroit de Northumberland")?"selected":""}>Détroit de Northumberland</option>
