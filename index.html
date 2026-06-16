@@ -655,6 +655,7 @@ let data={
 
   let fd=new FormData();
      for(let k in data) fd.append(k,data[k]);
+   fd.append("action","save");
 
 console.log("SAUVER déclenché");
 
