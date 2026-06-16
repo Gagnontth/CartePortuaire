@@ -506,14 +506,46 @@ function ouvrirForm(id, lat=null, lng=null){
   title='De Montréal jusqu’aux Grands Lacs'>
   Voie Maritime
 </option>
-    <option value='Voie Maritime' ${(p.Region==="Voie Maritime")?"selected":""}>Voie Maritime</option>
-    <option value='Gaspesie' ${(p.Region==="Gaspesie")?"selected":""}>Gaspesie et Baie-des-Chaleurs</option>
-    <option value='Cote-Nord' ${(p.Region==="Cote-Nord")?"selected":""}>Côte-Nord</option>
-    <option value='Golf du Saint-Laurent' ${(p.Region==="Golf du Saint-Laurent")?"selected":""}>Golfe du Saint-Laurent</option>
-    <option value='Detroit de Northumberland' ${(p.Region==="Detroit de Northumberland")?"selected":""}>Détroit de Northumberland</option>
-    <option value='Cape Breton' ${(p.Region==="Cape Breton")?"selected":""}>Cape Breton</option>
-    <option value='Cote Est' ${(p.Region==="Cote Est")?"selected":""}>Côte Est</option>
-    <option value='Terre-Neuve' ${(p.Region==="Terre-Neuve")?"selected":""}>Terre-Neuve</option>
+<option value='Fleuve Saint-Laurent' 
+  ${(p.Region==="Fleuve Saint-Laurent")?"selected":""}
+  title='De montréal à Tadoussac/Matane'>
+  Fleuve Saint-Laurent
+</option>
+<option value='Gaspesie' 
+  ${(p.Region==="Gaspesie")?"selected":""}
+  title='De Matane à la Baie-des-Chaleurs et Miscou'>
+  Gaspésie et Baie-des-Charleurs
+</option>
+<option value='Cote-Nord' 
+  ${(p.Region==="Cote-Nord")?"selected":""}
+  title='Tadoussac à Blanc Sablon'>
+  Côte-Nord
+</option>    
+<option value='Golf du Saint-Laurent' 
+  ${(p.Region==="Golf du Saint-Laurent")?"selected":""}
+  title='Golf du Saint-Laurent et Anticosti'>
+  Golf du Saint-Laurent et Anticosti
+</option> 
+<option value='Detroit de Northumberland' 
+  ${(p.Region==="Detroit de Northumberland")?"selected":""}
+  title='Detroit de Northumberland, IPE et NB'>
+  Détroit de Northumberland
+</option> 
+<option value='Cape Breton' 
+  ${(p.Region==="Cape Breton")?"selected":""}
+  title='Cape Breton'>
+  Cape Breton
+</option> 
+<option value='Cote Est' 
+  ${(p.Region==="Cote Est")?"selected":""}
+  title='Côte Est de la nouvelle-écosse Port Hawkesbury à la Baie de Fundy'>
+  Côte Est
+</option> 
+<option value='Terre-Neuve' 
+  ${(p.Region==="Terre-Neuve")?"selected":""}
+  title='Terre-Neuve'>
+  Terre-Neuve
+</option> 
   </select>
 </div>
 
